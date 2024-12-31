@@ -1,14 +1,17 @@
+# buildkite.yml
 steps:
-  - label: ":python: Install Dependencies and Run Script"
+  - label: ":python: Run Python Bot"
+    command:
+      - "echo 'Setting up Python environment...'"
+      - "python --version"
+      - "pip install telebot"
+      - "echo 'Starting the bot...'"
+      - "python rb.py"
     plugins:
-      docker#v3.8.0:
-        image: python:3.9
-    commands:
-      - echo "Updating package manager..."
-      - apt-get update && apt-get install -y python3-pip
-      - echo "Setting up the environment..."
-      - pip install telebot pymongo aiohttp
-      - echo "Granting execute permission to 'sharp' binary..."
-      - chmod +x *
-      - echo "Running the Python script..."
-      - python3 rb.py
+      - docker#v3.12.0:
+          image: "python:3.11"
+    agents:
+      queue: "default"
+    timeout_in_minutes: 10
+    env:
+      BOT_ENV: "production"  # Customize environment variables if needed
